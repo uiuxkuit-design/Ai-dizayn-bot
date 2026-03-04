@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHU YERDA AI - Premium 8-in-1</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { --bg: #05070a; --card: #0d111a; --accent: #6366f1; }
+        body { background: var(--bg); color: white; font-family: sans-serif; margin: 0; min-height: 100vh; overflow-x: hidden; }
+        
+        /* LOGIN MODAL - Eng ustki qatlam */
+        #auth-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg); z-index: 9999; display: flex; align-items: center; justify-content: center;
+        }
+
+        .hidden { display: none !important; }
+
+        /* Bento Grid Layout */
+        .bento-grid {
+            display: grid; 
+            grid-template-columns: repeat(4, 1fr);
+            grid-auto-rows: 160px; 
+            gap: 1.25rem;
+        }
+        .card-2x2 { grid-column: span 2; grid-row: span 2; }
+        .card-2x1 { grid-column: span 2; }
+
+        .premium-card {
+            background: var(--card); border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 24px; transition: 0.3s; position: relative; overflow: hidden;
+            display: flex; flex-direction: column; padding: 1.5rem;
+        }
+        .premium-card:hover { border-color: var(--accent); transform: translateY(-5px); background: #121826; }
+        
+        .market-btn {
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+            color: white; cursor: pointer; transition: 0.2s; padding: 12px; border-radius: 16px; font-weight: 800; font-size: 11px;
+        }
+        .market-btn:hover { background: var(--accent); }
+        
+        @media (max-width: 768px) { 
+            .bento-grid { grid-template-columns: repeat(2, 1fr); } 
+            .card-2x1 { grid-column: span 2; }
+        }
+    </style>
+</head>
+<body class="p-6 md:p-12">
+
+    <div id="auth-overlay">
+        <div class="w-full max-w-md p-10 bg-[#0d111a] border border-white/10 rounded-[40px] text-center mx-4 shadow-2xl">
+            <div class="w-16 h-16 bg-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-6 text-2xl font-black italic">S</div>
+            <h2 class="text-2xl font-bold mb-8">Xush kelibsiz</h2>
+            <input type="text" id="name-in" placeholder="Ismingiz" class="w-full p-4 mb-4 bg-black border border-gray-800 rounded-xl outline-none text-white focus:border-indigo-500">
+            <input type="tel" id="phone-in" placeholder="Telefon" class="w-full p-4 mb-6 bg-black border border-gray-800 rounded-xl outline-none text-white focus:border-indigo-500">
+            <button onclick="loginNow()" class="w-full bg-indigo-600 py-4 rounded-xl font-bold uppercase tracking-widest hover:bg-indigo-500 transition">KIRISH</button>
+        </div>
+    </div>
+
+    <div id="app-content" class="max-w-6xl mx-auto">
+        <header class="flex justify-between items-center mb-12">
+            <h1 class="text-2xl font-black italic text-indigo-500 tracking-tighter">SHU YERDA AI</h1>
+            <div id="user-tag" class="bg-white/5 px-4 py-2 rounded-full border border-white/10 text-[10px] font-bold text-indigo-300"></div>
+        </header>
+
+        <div id="dash-view" class="bento-grid">
+            
+            <div class="premium-card card-2x2">
+                <div class="text-4xl mb-4">🎨</div>
+                <h3 class="text-2xl font-black mb-2">Marketplace<br>Infografikasi</h3>
+                <p class="text-gray-500 text-xs mb-8">Uzum va Wildberries uchun rasm tayyorlash.</p>
+                <div class="grid grid-cols-2 gap-3 mt-auto">
+                    <button onclick="startTool('Uzum Market')" class="market-btn uppercase">Uzum</button>
+                    <button onclick="startTool('Wildberries')" class="market-btn uppercase">WB</button>
+                </div>
+            </div>
+
+            <div class="premium-card cursor-pointer" onclick="startTool('Foto Tahrir')">
+                <div class="text-2xl mb-2">🪄</div>
+                <h3 class="font-bold text-[10px] uppercase">Foto Tahrir</h3>
+                <p class="text-gray-500 text-[9px] mt-auto">Fonni o'chirish va sifatni oshirish.</p>
+            </div>
+
+            <div class="premium-card cursor-pointer" onclick="startTool('AI Rasmlar')">
+                <div class="text-2xl mb-2">🚀</div>
+                <h3 class="font-bold text-[10px] uppercase text-emerald-400">AI Rasmlar</h3>
+                <p class="text-gray-500 text-[9px] mt-auto">Matn orqali rasm yaratish.</p>
+            </div>
+
+            <div class="premium-card card-2x1 cursor-pointer flex-row items-center justify-between" onclick="startTool('Smart Matn')">
+                <div>
+                    <h3 class="font-bold text-lg uppercase tracking-tight">Smart Matn AI</h3>
+                    <p class="text-gray-500 text-xs">Mahsulot tavsifi yozish.</p>
+                </div>
+                <div class="text-3xl opacity-10 font-black italic">GPT-4o</div>
+            </div>
+
+            <div class="premium-card cursor-pointer" onclick="startTool('Style Copy')">
+                <div class="text-xl mb-2">✨</div>
+                <h3 class="font-bold text-[10px] uppercase">Style Copy</h3>
+                <p class="text-gray-500 text-[8px] mt-auto">Uslubni ko'chirish.</p>
+            </div>
+
+            <div class="premium-card cursor-pointer" onclick="startTool('Fashion AI')">
+                <div class="text-xl mb-2">👕</div>
+                <h3 class="font-bold text-[10px] uppercase">Fashion AI</h3>
+                <p class="text-gray-500 text-[8px] mt-auto">Virtual kiyim almashtirish.</p>
+            </div>
+
+            <div class="premium-card cursor-pointer" onclick="startTool('Paketlar')">
+                <div class="text-xl mb-2">📦</div>
+                <h3 class="font-bold text-[10px] uppercase">Paketlar</h3>
+                <p class="text-gray-500 text-[8px] mt-auto">Ommaviy tahrirlash.</p>
+            </div>
+
+            <div class="premium-card cursor-pointer" onclick="startTool('Pro Foto')">
+                <div class="text-xl mb-2">📸</div>
+                <h3 class="font-bold text-[10px] uppercase text-cyan-400">Pro Foto</h3>
+                <p class="text-gray-500 text-[8px] mt-auto">Reklama fotosessiyasi.</p>
+            </div>
+
+        </div>
+
+        <div id="tool-view" class="hidden text-center max-w-3xl mx-auto">
+            <button onclick="goBack()" class="mb-10 text-gray-500 text-[10px] font-bold uppercase flex items-center gap-2 hover:text-white transition"><i class="fa-solid fa-arrow-left"></i> Orqaga qaytish</button>
+            <h2 id="tool-name" class="text-5xl font-black italic mb-10 text-indigo-500 uppercase tracking-tighter"></h2>
+            <div class="bg-[#0d111a] p-16 rounded-[40px] border border-white/5 border-dashed">
+                <i class="fa-solid fa-cloud-arrow-up text-4xl mb-6 text-gray-700"></i>
+                <p class="text-gray-400 mb-8">Ishni boshlash uchun fayl yuklang</p>
+                <button class="bg-white text-black px-12 py-4 rounded-2xl font-black text-xs uppercase hover:bg-gray-200 transition">FAYLNI TANLASH</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Kirishni boshqarish
+        function loginNow() {
+            const name = document.getElementById('name-in').value;
+            if(name.trim() !== "") {
+                localStorage.setItem('shuyerda_session_v2', name);
+                init();
+            } else { alert("Ismingizni kiriting!"); }
+        }
+
+        // Saytni yuklash va loginni tekshirish
+        function init() {
+            const user = localStorage.getItem('shuyerda_session_v2');
+            const overlay = document.getElementById('auth-overlay');
+            if(user) {
+                overlay.style.display = 'none'; // Parda butunlay o'chadi
+                document.getElementById('user-tag').innerText = "ACCOUNT: " + user.toUpperCase();
+            }
+        }
+
+        // Bo'limni ochish
+        function startTool(name) {
+            document.getElementById('tool-name').innerText = name;
+            document.getElementById('dash-view').classList.add('hidden');
+            document.getElementById('tool-view').classList.remove('hidden');
+            window.scrollTo(0,0);
+        }
+
+        // Orqaga qaytish
+        function goBack() {
+            document.getElementById('dash-view').classList.remove('hidden');
+            document.getElementById('tool-view').classList.add('hidden');
+        }
+
+        window.onload = init;
+    </script>
+</body>
+</html>
